@@ -3,7 +3,7 @@
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- use the previously created timestamp to create a uniquely
              named log file -->
-        <file>morphological-engine.log</file>
+        <file>/opt/log/morphological-engine.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- daily rollover -->
             <fileNamePattern>morphological-engine.%d{yyyy-MM-dd}.log</fileNamePattern>
@@ -98,4 +98,5 @@
     <logger name="org.springframework.web.servlet.resource" level="INFO"/>
     <logger name="org.springframework.jmx.support" level="INFO"/>
     <logger name="org.springframework.web.servlet" level="INFO"/>
+    <logger name="com.alphasystem.app.morphologicalengine.conjugation.builder" level="INFO"/>
 </configuration>
