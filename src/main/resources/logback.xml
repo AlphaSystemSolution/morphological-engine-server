@@ -87,4 +87,15 @@
     <logger name="org.springframework.test.context" level="INFO"/>
     <logger name="org.apache.catalina.authenticator" level="INFO"/>
     <logger name="org.springframework.web.context" level="INFO"/>
+    <logger name="org.springframework.web.servlet.handler" level="INFO"/>
+    <logger name="org.springframework.web.servlet.mvc.method.annotation" level="INFO"/>
+    <logger name="org.apache.catalina.util" level="INFO"/>
+    <logger name="org.springframework.boot.web.servlet" level="INFO"/>
+    <logger name="org.apache.catalina.session" level="INFO"/>
+    <logger name="org.hibernate.validator.internal.xml" level="INFO"/>
+    <logger name="org.springframework.jmx.export.annotation" level="INFO"/>
+    <logger name="org.apache.catalina.mapper" level="INFO"/>
+    <logger name="org.springframework.web.servlet.resource" level="INFO"/>
+    <logger name="org.springframework.jmx.support" level="INFO"/>
+    <logger name="org.springframework.web.servlet" level="INFO"/>
 </configuration>
