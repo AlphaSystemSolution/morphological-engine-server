@@ -71,7 +71,6 @@ public class MorphologicalEngineRestController {
         } else {
             HttpHeaders headers = new HttpHeaders();
             headers.add("Access-Control-Allow-Methods", "POST");
-            headers.add("Access-Control-Allow-Headers", "Content-Type");
             headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
 
             List<MorphologicalChart> morphologicalCharts = new ArrayList<>();
@@ -138,6 +137,26 @@ public class MorphologicalEngineRestController {
     }
 
     @CrossOrigin("*")
+    @RequestMapping(value = "/AbbreviatedConjugation/format/{format}", method = RequestMethod.POST,
+            consumes = APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<AbbreviatedConjugation[]> doAbbreviatedConjugations(
+            @PathVariable(name = "format") OutputFormat format,
+            @RequestBody ConjugationTemplate conjugationTemplate){
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Access-Control-Allow-Methods", "POST");
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+
+        List<AbbreviatedConjugation> abbreviatedConjugations = new ArrayList<>();
+        final List<ConjugationData> conjugationDataList = conjugationTemplate.getData();
+
+        conjugationDataList.forEach(conjugationData ->
+                abbreviatedConjugations.add(abbreviatedConjugationBuilder.doAbbreviatedConjugation(getConjugationRoots(conjugationData), format)));
+        final AbbreviatedConjugation[] conjugations = abbreviatedConjugations.toArray(new AbbreviatedConjugation[abbreviatedConjugations.size()]);
+        return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_JSON_UTF8).body(conjugations);
+    }
+
+    @CrossOrigin("*")
     @RequestMapping(value = "/DetailedConjugation/type/{type}/template/{template}/format/{format}", method = RequestMethod.GET,
             consumes = APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ConjugationGroup[]> doDetailedConjugation(
@@ -152,11 +171,12 @@ public class MorphologicalEngineRestController {
             @RequestHeader(name = "skipRuleProcessing", required = false) boolean skipRuleProcessing) {
 
         RootLetters rootLetters = new RootLetters(firstRadical, secondRadical, thirdRadical, fourthRadical);
-
+        final String templateId = String.format("%s_%s_%s", sarfTermType.name(), template.name(), rootLetters.getName());
         ConjugationGroup[] groups = doConjugate(sarfTermType, template, format, skipRuleProcessing, rootLetters, verbalNouns);
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Access-Control-Allow-Methods", "GET");
+        headers.set("templateId", templateId);
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
 
         return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_JSON_UTF8).body(groups);
