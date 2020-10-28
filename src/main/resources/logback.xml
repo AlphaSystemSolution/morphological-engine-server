@@ -1,22 +1,5 @@
 <configuration>
 
-    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <!-- use the previously created timestamp to create a uniquely
-             named log file -->
-        <file>morphological-engine.log</file>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!-- daily rollover -->
-            <fileNamePattern>morphological-engine.%d{yyyy-MM-dd}.log</fileNamePattern>
-
-            <!-- keep 30 days' worth of history capped at 3GB total size -->
-            <maxHistory>30</maxHistory>
-            <totalSizeCap>3GB</totalSizeCap>
-        </rollingPolicy>
-        <encoder>
-            <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
-        </encoder>
-    </appender>
-
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <!-- encoders are assigned the type
              ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
@@ -27,24 +10,22 @@
 
     <root level="error">
         <appender-ref ref="STDOUT"/>
-        <appender-ref ref="FILE"/>
     </root>
 
     <root level="warn">
         <appender-ref ref="STDOUT"/>
-        <appender-ref ref="FILE"/>
     </root>
 
     <root level="info">
         <appender-ref ref="STDOUT"/>
-        <appender-ref ref="FILE"/>
     </root>
 
     <root level="debug">
         <appender-ref ref="STDOUT"/>
-        <appender-ref ref="FILE"/>
     </root>
 
+    <logger name="sun.rmi" level="INFO"/>
+    <logger name="springfox.documentation" level="INFO"/>
     <logger name="org.springframework.beans.factory.support" level="INFO"/>
     <logger name="org.springframework.test.context" level="INFO"/>
     <logger name="org.springframework.context" level="INFO"/>
@@ -98,4 +79,5 @@
     <logger name="org.springframework.web.servlet.resource" level="INFO"/>
     <logger name="org.springframework.jmx.support" level="INFO"/>
     <logger name="org.springframework.web.servlet" level="INFO"/>
+    <logger name="com.alphasystem.app.morphologicalengine.conjugation.builder" level="INFO"/>
 </configuration>
