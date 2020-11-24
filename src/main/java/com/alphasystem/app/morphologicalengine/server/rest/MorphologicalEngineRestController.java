@@ -72,8 +72,9 @@ public class MorphologicalEngineRestController {
             List<MorphologicalChart> morphologicalCharts = new ArrayList<>();
             final List<ConjugationData> conjugationDataList = conjugationTemplate.getData();
             conjugationDataList.forEach(conjugationData ->
-                    morphologicalCharts.add(conjugationBuilder.doConjugation(getConjugationRoots(conjugationData), format)));
-            result = ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_JSON_UTF8).body(morphologicalCharts);
+                    morphologicalCharts.add(conjugationBuilder.doConjugation(conjugationData.getId(),
+                            getConjugationRoots(conjugationData), format)));
+            result = ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_JSON).body(morphologicalCharts);
         }
         return result;
     }
@@ -129,7 +130,7 @@ public class MorphologicalEngineRestController {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Access-Control-Allow-Methods", "GET");
         headers.setContentType(MediaType.APPLICATION_JSON);
-        return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_JSON_UTF8).body(abbreviatedConjugation);
+        return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_JSON).body(abbreviatedConjugation);
     }
 
     @CrossOrigin("*")
@@ -173,9 +174,9 @@ public class MorphologicalEngineRestController {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Access-Control-Allow-Methods", "GET");
         headers.set("templateId", templateId);
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+        headers.setContentType(MediaType.APPLICATION_JSON);
 
-        return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_JSON_UTF8).body(groups);
+        return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_JSON).body(groups);
     }
 
     private ConjugationGroup[] doConjugate(SarfTermType sarfTermType, NamedTemplate template, OutputFormat format,
