@@ -5,11 +5,14 @@ services:
     image: sfali23/morphological-engine-server:latest
     ports:
       - "8080:8080"
-    networks:
-      - alphasystem
     container_name: morphological_engine
 
-networks:
-  alphasystem:
-    external:
-      name: 'alphasystem'
+  morphological_engine_ui:
+    image: sfali23/morphological-engine-ui:latest
+    depends_on:
+      - morphological_engine
+    ports:
+      - "5000:5000"
+    environment:
+      REACT_APP_MORPHOLOGICAL_ENGINE_HOST: http://morphological_engine:8080
+    container_name: morphological_engine_ui
