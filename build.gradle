@@ -9,6 +9,7 @@ plugins {
     id 'maven-publish'
     id 'io.spring.dependency-management' version "1.0.10.RELEASE"
     id 'org.springframework.boot' version '2.3.4.RELEASE'
+    id "com.google.cloud.tools.jib" version "2.6.0"
 }
 
 repositories {
@@ -45,5 +46,15 @@ tasks.withType(JavaCompile) {
 test {
     useTestNG() {
         suites "testng/testng.xml"
+    }
+}
+
+jib {
+    from {
+        image = "adoptopenjdk/openjdk8:debian"
+    }
+    to {
+        image = "sfali23/morphological-engine-server"
+        tags = [version]
     }
 }

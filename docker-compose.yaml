@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  morphological_engine:
+    image: sfali23/morphological-engine-server:latest
+    ports:
+      - "8080:8080"
+    networks:
+      - alphasystem
+    container_name: morphological_engine
+
+networks:
+  alphasystem:
+    external:
+      name: 'alphasystem'
